@@ -63,7 +63,8 @@
                         </label>
 
                         <select name="supplier_id"
-                                class="form-select">
+                                class="form-select"
+                                id="supplier">
 
                             <option value="">
                                 -- Pilih Supplier --
@@ -91,7 +92,8 @@
                         </label>
 
                         <select name="purchase_order_id"
-                                class="form-select">
+                                class="form-select"
+                                id="purchase_order">
 
                             <option value="">
                                 -- Pilih PO --
@@ -157,7 +159,7 @@
 
                         </thead>
 
-                        <tbody>
+                        <tbody id="detail-body">
 
                             <tr>
 
@@ -368,6 +370,106 @@ $(document).on(
 
     }
 );
+
+// AJAX
+$('#purchase_order').change(function(){
+
+    let id = $(this).val();
+
+    if(id=="") return;
+
+    $.ajax({
+
+        url:'/purchase-order/'+id+'/detail',
+
+        type:'GET',
+
+        success:function(response){
+
+            //supplier otomatis
+
+            $('#supplier').val(response.supplier_id);
+
+            //hapus semua row lama
+
+            $('#detail-body').html('');
+
+            response.details.forEach(function(item){
+
+                let subtotal =
+                    item.qty * item.harga;
+
+                let row = `
+
+                <tr>
+
+                    <td>
+
+                        <select
+                            name="barang_id[]"
+                            class="form-select">
+
+                            <option value="${item.barang.id}" selected>
+
+                                ${item.barang.nama_barang}
+
+                            </option>
+
+                        </select>
+
+                    </td>
+
+                    <td>
+
+                        <input
+                            class="form-control qty"
+                            name="qty[]"
+                            value="${item.qty}">
+
+                    </td>
+
+                    <td>
+
+                        <input
+                            class="form-control harga"
+                            name="harga_beli[]"
+                            value="${item.harga}">
+
+                    </td>
+
+                    <td>
+
+                        <input
+                            class="form-control"
+                            value="${subtotal}"
+                            readonly>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                        class="btn btn-danger remove-row">
+
+                        Hapus
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                `;
+
+                $('#detail-body').append(row);
+
+            });
+
+        }
+
+    });
+
+});
 
 </script>
 

@@ -80,6 +80,11 @@ class MaterialRequestController extends Controller
             | KATEGORI
             |--------------------------------------------------------------------------
             */
+            // Pembuatan kode_kategori secara otomatis
+            $lastCategory = Kategori::latest('id')->first();
+            $nextNumber = $lastCategory ? ($lastCategory->id + 1) : 1;
+            $paddedNumber = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+            $kodeOtomatis = 'KTG-' . $paddedNumber;
 
             $namaKategori =
                 $request->nama_kategori[$index] ?? 'Lainnya';
@@ -91,8 +96,7 @@ class MaterialRequestController extends Controller
                 ],
 
                 [
-                    'kode_kategori' =>
-                    'KTG-' . time() . rand(100,999)
+                    'kode_kategori' => $kodeOtomatis,
                 ]
 
             );
@@ -113,7 +117,7 @@ class MaterialRequestController extends Controller
                 [
 
                     'kode_barang' =>
-                    'BRG-' . time() . rand(100,999),
+                    'BRG-' . now()->format('YmdHis') . rand(01,99),
 
                     'kategori_id' =>
                     $kategori->id,

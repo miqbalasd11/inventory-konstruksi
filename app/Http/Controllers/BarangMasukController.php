@@ -261,4 +261,12 @@ class BarangMasukController extends Controller
                 'Data Barang Masuk berhasil diperbarui'
             );
     }
+
+    public function getPoDetail($id)
+    {
+        $po = PurchaseOrder::with('details.barang', 'supplier')
+            ->findOrFail($id);
+
+        return response()->json($po);
+    }
 }

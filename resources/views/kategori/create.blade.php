@@ -13,13 +13,6 @@
             @csrf
 
             <div class="mb-3">
-                <label>Kode Kategori</label>
-                <input type="text"
-                       name="kode_kategori"
-                       class="form-control">
-            </div>
-
-            <div class="mb-3">
                 <label>Nama Kategori</label>
                 <input type="text"
                        name="nama_kategori"

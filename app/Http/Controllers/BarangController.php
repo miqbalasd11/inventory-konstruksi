@@ -39,14 +39,13 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_barang' => 'required|unique:barangs,kode_barang',
             'nama_barang' => 'required',
             'kategori_id' => 'required',
             'satuan_id'   => 'required',
         ]);
 
         $barang = Barang::create([
-            'kode_barang'  => $request->kode_barang,
+             'kode_barang' => 'BRG-' . now()->format('YmdHis'),
             'nama_barang'  => $request->nama_barang,
             'kategori_id'  => $request->kategori_id,
             'satuan_id'    => $request->satuan_id,

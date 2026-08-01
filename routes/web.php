@@ -92,6 +92,11 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:Manajer Proyek|Manager Proyek|Manager')
         ->name('manager.dashboard');
 
+    Route::middleware(['auth', 'role:Super Admin,Admin Gudang'])->group(function () {
+        // Route AJAX untuk mengambil detail Purchase Order
+        Route::get('/purchase-order/{id}/detail', [BarangMasukController::class, 'getPoDetail'])
+            ->name('purchase-order.detail');
+    });
     /*
     |--------------------------------------------------------------------------
     | SUPER ADMIN

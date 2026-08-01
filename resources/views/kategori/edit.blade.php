@@ -15,14 +15,7 @@
             @csrf
             @method('PUT')
 
-            <div class="mb-3">
-                <label>Kode Kategori</label>
-                <input type="text"
-                       name="kode_kategori"
-                       class="form-control"
-                       value="{{ $kategori->kode_kategori }}">
-            </div>
-
+            
             <div class="mb-3">
                 <label>Nama Kategori</label>
                 <input type="text"

@@ -26,13 +26,20 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_kategori' => 'required|unique:kategoris',
+            'kode_kategori' => 'nullable|unique:kategoris',
             'nama_kategori' => 'required',
         ]);
 
+        // Pembuatan kode_kategori secara otomatis
+            $lastCategory = Kategori::latest('id')->first();
+            $nextNumber = $lastCategory ? ($lastCategory->id + 1) : 1;
+            $paddedNumber = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+            $kodeOtomatis = 'KTG-' . $paddedNumber;
+
         $kategori = Kategori::create([
-            'kode_kategori' => $request->kode_kategori,
+            'kode_kategori' => $kodeOtomatis,
             'nama_kategori' => $request->nama_kategori,
+            'keterangan' => $request->keterangan,
         ]);
 
         ActivityHelper::log(
@@ -72,16 +79,13 @@ class KategoriController extends Controller
         Kategori $kategori
     ) {
         $request->validate([
-            'kode_kategori' =>
-                'required|unique:kategoris,kode_kategori,' .
-                $kategori->id,
-
             'nama_kategori' => 'required',
         ]);
+        
 
         $kategori->update([
-            'kode_kategori' => $request->kode_kategori,
             'nama_kategori' => $request->nama_kategori,
+            'keterangan' => $request->keterangan,
         ]);
 
         ActivityHelper::log(
