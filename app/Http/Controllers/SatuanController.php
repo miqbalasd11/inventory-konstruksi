@@ -109,4 +109,20 @@ class SatuanController extends Controller
             ->route('satuan.index')
             ->with('success', 'Data satuan berhasil dihapus');
     }
+
+    public function getByKode($kode)
+    {
+        $satuan = Satuan::where('kode_satuan', $kode)->first();
+
+        if (!$satuan) {
+            return response()->json([
+                'status' => false
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $satuan
+        ]);
+    }
 }

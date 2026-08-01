@@ -115,6 +115,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('permintaan-barang', PermintaanBarangController::class);
 
         Route::get(
+            '/satuan/ajax/{kode}',
+            [SatuanController::class, 'getByKode']
+        )->name('satuan.ajax');
+
+        Route::get(
             '/activity-log',
             [ActivityLogController::class, 'index']
         )->name('activity-log.index');
