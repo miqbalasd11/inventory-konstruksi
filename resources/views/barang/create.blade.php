@@ -25,18 +25,6 @@
 
             <div class="row">
 
-                {{-- <div class="col-md-6 mb-3">
-                    <label class="form-label">
-                        Kode Barang
-                    </label>
-
-                    <input type="text"
-                           name="kode_barang"
-                           class="form-control"
-                           value="{{ old('kode_barang') }}"
-                           required>
-                </div> --}}
-
                 <div class="col-md-6 mb-3">
                     <label class="form-label">
                         Nama Barang

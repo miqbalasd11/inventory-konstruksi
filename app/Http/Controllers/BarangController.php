@@ -45,7 +45,7 @@ class BarangController extends Controller
         ]);
 
         $barang = Barang::create([
-             'kode_barang' => 'BRG-' . now()->format('YmdHis'),
+             'kode_barang' => 'BRG-' . now()->format('YmdHis') . rand(01,99),
             'nama_barang'  => $request->nama_barang,
             'kategori_id'  => $request->kategori_id,
             'satuan_id'    => $request->satuan_id,
@@ -105,17 +105,12 @@ class BarangController extends Controller
         Barang $barang
     ) {
         $request->validate([
-            'kode_barang' =>
-                'required|unique:barangs,kode_barang,' .
-                $barang->id,
-
             'nama_barang' => 'required',
             'kategori_id' => 'required',
             'satuan_id'   => 'required',
         ]);
 
         $barang->update([
-            'kode_barang'  => $request->kode_barang,
             'nama_barang'  => $request->nama_barang,
             'kategori_id'  => $request->kategori_id,
             'satuan_id'    => $request->satuan_id,
